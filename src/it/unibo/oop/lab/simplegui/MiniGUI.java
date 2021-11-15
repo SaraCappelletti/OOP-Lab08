@@ -10,9 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * This class is a simple application that writes a random number on a file.
@@ -38,13 +40,52 @@ public class MiniGUI {
         canvas.add(write, BorderLayout.CENTER);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    /*
+     * Ex 01.01
+     * 1.Create a new JPanel
+     */
+        final JPanel p1 = new JPanel();
+    /*
+     * 2.Use an horizontal BoxLayout as layout
+     */ 
+        p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+    /*
+     * 3.Set the new JPanel as the only content of the center of the current BorderLayout
+     */
+        canvas.add(p1, BorderLayout.CENTER);
+    /*
+     * 4.Add the JButton to the new panel
+     */
+        p1.add(write);
+    /*
+     * 5.Test your application: it should appear similar, but the button will get smaller
+     * 6.In display(), use JFrame.pack() to resize the frame to the minimum size prior to displaying
+     */
+    /*
+     * Ex 01.02
+     * 1.Create a new "Result" text field
+     */
+        final JTextField t1 = new JTextField("Result");
+    /*
+     * 2.Add it to the external JPanel in such a way that it gets on the top of the frame (Borderlayout.NORTH)
+     * 3.Test your application. Verify that you can see a new Text field, but it is useless
+     */
+        canvas.add(t1, BorderLayout.NORTH);
+    /*
+     * Ex 01.03
+     * 1.Modify the application in such a way that the text field displays the same number that
+     * gets printed
+     * 2.Test it
+     */
         /*
          * Handlers
          */
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                System.out.println(rng.nextInt());
+                final int num = rng.nextInt();
+                System.out.println(num);
+                t1.setText(Integer.toString(num));
             }
         });
     }
@@ -62,6 +103,10 @@ public class MiniGUI {
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
         frame.setSize(sw / PROPORTION, sh / PROPORTION);
+        /*
+         * 6.In display(), use JFrame.pack() to resize the frame to the minimum size prior to displaying
+         */
+        frame.pack();
         /*
          * Instead of appearing at (0,0), upper left corner of the screen, this
          * flag makes the OS window manager take care of the default positioning

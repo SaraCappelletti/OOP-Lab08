@@ -6,9 +6,14 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 import java.util.Random;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -42,6 +47,55 @@ public class BadIOGUI {
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
+         * Ex 01.01
+         * 1.Create a new JPanel
+         */
+        final JPanel p1 = new JPanel();
+        /*
+         * 2.Use an horizontal BoxLayout as layout
+         */
+        p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+        /*
+         * 3.Set the new JPanel as the only content of the center of the current BorderLayout
+         */
+        canvas.add(p1, BorderLayout.CENTER);
+        /*
+         * 4.Add the "write" JButton to the new panel
+         */
+        p1.add(write);
+        /* 5.Test your application: it should appear similar, but the button will get smaller
+         * 6.In display(), use JFrame.pack() to resize the frame to the minimum size prior to displaying
+        */
+        /*
+         * Ex 01.02
+         * 1.Create a new "Read" button
+         */
+        final JButton b1 = new JButton("Read");
+        /*
+         * 2.Add it to the JPanel created in Ex 01.01
+         */
+        p1.add(b1);
+        /*
+         * 3.Test your application. Verify that you can see a new button, but it is useless
+         * 4.Write a new ActionListener for the new button, in form of anonymous class,
+         * that prints a string on terminal (use System.out) when the button is pressed.
+         * 5.Test it
+         */
+        b1.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                System.out.println("Pressed Button");
+            }
+        });
+
+        /*
+         * Ex 01.03
+         * 1.Modify the ActionListener in such a way that it reads the content of the same file
+         * that is written when the button "write" is pressed, and prints its content
+         * on standard output
+         */
+        /*
          * Handlers
          */
         write.addActionListener(new ActionListener() {
@@ -57,6 +111,13 @@ public class BadIOGUI {
                 try (PrintStream ps = new PrintStream(PATH)) {
                     ps.print(rng.nextInt());
                 } catch (FileNotFoundException e1) {
+                    JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
+                    e1.printStackTrace();
+                }
+                try {
+                    final List<String> o = Files.readAllLines(Path.of(PATH));
+                    System.out.println(o);
+                } catch (IOException e1) {
                     JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
                     e1.printStackTrace();
                 }
@@ -77,6 +138,10 @@ public class BadIOGUI {
         final int sw = (int) screen.getWidth();
         final int sh = (int) screen.getHeight();
         frame.setSize(sw / PROPORTION, sh / PROPORTION);
+        /*
+         * 6.In display(), use JFrame.pack() to resize the frame to the minimum size prior to displaying
+         */
+        frame.pack();        
         /*
          * Instead of appearing at (0,0), upper left corner of the screen, this
          * flag makes the OS window manager take care of the default positioning
