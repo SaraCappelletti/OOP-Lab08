@@ -9,6 +9,7 @@ import javax.swing.JFrame;
  * A very simple program using a graphical interface.
  * 
  */
+
 public final class SimpleGUI {
 
     private final JFrame frame = new JFrame();
@@ -60,6 +61,14 @@ public final class SimpleGUI {
          * on screen. Results may vary, but it is generally the best choice.
          */
         frame.setLocationByPlatform(true);
+    }
+
+    public void display() {
+        frame.setVisible(true);
+    }
+
+    public static void main(final String... agrs) {
+        new SimpleGUI(new SimpleController()).display();
     }
 
 }
