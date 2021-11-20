@@ -141,7 +141,7 @@ public class BadIOGUI {
         /*
          * 6.In display(), use JFrame.pack() to resize the frame to the minimum size prior to displaying
          */
-        frame.pack();        
+        frame.pack();
         /*
          * Instead of appearing at (0,0), upper left corner of the screen, this
          * flag makes the OS window manager take care of the default positioning
