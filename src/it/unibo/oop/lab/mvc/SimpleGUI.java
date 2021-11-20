@@ -1,9 +1,17 @@
 package it.unibo.oop.lab.mvc;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  * A very simple program using a graphical interface.
@@ -13,11 +21,12 @@ import javax.swing.JFrame;
 public final class SimpleGUI {
 
     private final JFrame frame = new JFrame();
+    private final Controller controller;
 
     /*
      * Once the Controller is done, implement this class in such a way that:
      * 
-     * 1) I has a main method that starts the graphical application
+     * 1) It has a main method that starts the graphical application
      * 
      * 2) In its constructor, sets up the whole view
      * 
@@ -37,9 +46,57 @@ public final class SimpleGUI {
 
     /**
      * builds a new {@link SimpleGUI}.
+     * @param controller
+     *                  new Controller for my SimpleGUI
      */
-    public SimpleGUI() {
+    public SimpleGUI(final Controller controller) {
+        this.controller = controller;
+        /*Point 3*/
+        final JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        final JTextField textField = new JTextField();
+        panel.add(textField, BorderLayout.NORTH);
+        final JTextArea textArea = new JTextArea();
+        panel.add(textArea, BorderLayout.CENTER);
+        final JButton printButton = new JButton("Print");
+        panel.add(printButton, BorderLayout.SOUTH);
+        final JButton showButton = new JButton("Show HIstory");
+        panel.add(showButton, BorderLayout.SOUTH);
+        /*final JPanel southPanel = new JPanel();
+        southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.LINE_AXIS));
+        canvas.add(southPanel, BorderLayout.SOUTH);
+        final JButton print = new JButton(PRINT);
+        final JButton showHistory = new JButton(SHOW_HISTORY);
+        southPanel.add(print);
+        southPanel.add(showHistory);*/
+        frame.setContentPane(panel);
+        /*Point 4*/
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        /*Point 5*/
+        printButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                SimpleGUI.this.controller.setNextStringToPrint(textField.getText());
+                SimpleGUI.this.controller.printCurrentString();
+            }
+        });
 
+        showButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final StringBuilder text = new StringBuilder();
+                final List<String> printedStrings = SimpleGUI.this.controller.getPrintedStrings();
+                for (final String s: printedStrings) {
+                    text.append(s);
+                    text.append('\n');
+                }
+                /*Nelle soluzioni aggiunge questo
+                if (!printedStrings.isEmpty()) {
+                    text.deleteCharAt(text.length() - 1);
+                }*/
+                textArea.setText(text.toString());
+            }
+        });
         /*
          * Make the frame half the resolution of the screen. This very method is
          * enough for a single screen setup. In case of multiple monitors, the
@@ -66,9 +123,9 @@ public final class SimpleGUI {
     public void display() {
         frame.setVisible(true);
     }
-
+    /*Point 1*/
     public static void main(final String... agrs) {
-        new SimpleGUI(new SimpleController()).display();
+        new SimpleGUI(new Controller()).display();
     }
 
 }
