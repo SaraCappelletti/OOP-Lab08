@@ -1,5 +1,7 @@
 package it.unibo.oop.lab.mvcio2;
 
+import javax.swing.JFrame;
+
 /**
  * A very simple program using a graphical interface.
  * 
@@ -31,5 +33,11 @@ public final class SimpleGUIWithFileChooser {
      * update the UI: in this example the UI knows when should be updated, so
      * try to keep things separated.
      */
+    /*Point 1*/
+    private final JFrame frame = new JFrame();
+    
+    private SimpleGUIWithFileChooser(new Controller cntrl) {
+        
+    }
 
 }
