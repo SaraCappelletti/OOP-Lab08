@@ -46,7 +46,7 @@ public final class SimpleGUI {
      * @param controller
      *                  new Controller for my SimpleGUI
      */
-    public SimpleGUI(final Controller controller) {
+    private SimpleGUI(final Controller controller) {
         /*Point 3*/
         final JTextArea text = new JTextArea();
         final JPanel panel = new JPanel();
