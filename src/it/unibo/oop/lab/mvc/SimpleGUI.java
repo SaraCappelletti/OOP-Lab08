@@ -52,24 +52,20 @@ public final class SimpleGUI {
     public SimpleGUI(final Controller controller) {
         this.controller = controller;
         /*Point 3*/
-        final JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new BorderLayout());
         final JTextField textField = new JTextField();
-        panel.add(textField, BorderLayout.NORTH);
+        panel1.add(textField, BorderLayout.NORTH);
         final JTextArea textArea = new JTextArea();
-        panel.add(textArea, BorderLayout.CENTER);
+        panel1.add(textArea, BorderLayout.CENTER);
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new BorderLayout());
+        panel1.add(panel2, BorderLayout.SOUTH);
         final JButton printButton = new JButton("Print");
-        panel.add(printButton, BorderLayout.SOUTH);
-        final JButton showButton = new JButton("Show HIstory");
-        panel.add(showButton, BorderLayout.SOUTH);
-        /*final JPanel southPanel = new JPanel();
-        southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.LINE_AXIS));
-        canvas.add(southPanel, BorderLayout.SOUTH);
-        final JButton print = new JButton(PRINT);
-        final JButton showHistory = new JButton(SHOW_HISTORY);
-        southPanel.add(print);
-        southPanel.add(showHistory);*/
-        frame.setContentPane(panel);
+        panel2.add(printButton, BorderLayout.WEST);
+        final JButton showButton = new JButton("Show History");
+        panel2.add(showButton, BorderLayout.EAST);
+        frame.setContentPane(panel1);
         /*Point 4*/
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*Point 5*/
@@ -125,7 +121,7 @@ public final class SimpleGUI {
     }
     /*Point 1*/
     public static void main(final String... agrs) {
-        new SimpleGUI(new Controller()).display();
+        new SimpleGUI(new SimpleController()).display();
     }
 
 }
